@@ -10,7 +10,7 @@ Works with Claude Code, Cursor, ChatGPT, and any AI agent that speaks the MCP pr
 
 ## Features
 
-- **Budget Control** — Daily USDC hard limit prevents agent overspending
+- **Budget Control** — Daily credits hard limit prevents agent overspending
 - **High-Risk Approval** — Operations exceeding amount threshold or matching sensitive resource keywords trigger human approval
 - **Approval Workflow** — Agent requests → token generated → human approves via Dashboard or Telegram
 - **Audit Log** — All spend, approval, and rejection actions recorded with cursor-based pagination
@@ -53,7 +53,7 @@ Configure via environment variables or `.env` file:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `MCP_TRANSPORT` | Transport: stdio / sse / http | Auto-detect (TTY → http) |
-| `BUDGET_LIMIT` | Daily budget cap (USDC) | 10.0 |
+| `BUDGET_LIMIT` | Daily budget cap (credits) | 10.0 |
 | `HIGH_RISK_THRESHOLD` | High-risk amount threshold | 2.0 |
 | `HIGH_RISK_RESOURCES` | High-risk resource keywords (comma-separated) | delete,send |
 | `DB_PATH` | SQLite database path | ./mcp-guard.db |

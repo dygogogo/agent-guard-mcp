@@ -144,7 +144,7 @@ func HandleApprovalAction(store BudgetStore, cfg *Config, logger *zap.Logger, ap
 			c.String(http.StatusOK, fmt.Sprintf(`<div class="bg-green-50 border-t border-green-200 p-3">
 				<p class="font-bold">Approved!</p>
 				<p>Payer: %s</p>
-				<p>Amount: $%.2f USDC</p>
+				<p>Amount: $%.2f</p>
 				<p>Resource: %s</p>
 				<p><a href="/dashboard" class="text-blue-600 hover:underline">Back to Dashboard</a></p>
 			</div>`, result.Payer, result.Amount, result.Resource))
@@ -158,7 +158,7 @@ func HandleApprovalAction(store BudgetStore, cfg *Config, logger *zap.Logger, ap
 			c.String(http.StatusOK, fmt.Sprintf(`<div class="bg-red-50 border-t border-red-200 p-3">
 				<p class="font-bold">Rejected</p>
 				<p>Payer: %s</p>
-				<p>Amount: $%.2f USDC</p>
+				<p>Amount: $%.2f</p>
 				<p>Resource: %s</p>
 				<p><a href="/dashboard" class="text-blue-600 hover:underline">Back to Dashboard</a></p>
 			</div>`, result.Payer, result.Amount, result.Resource))

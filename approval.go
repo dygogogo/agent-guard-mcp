@@ -142,7 +142,7 @@ func SendTelegramNotification(cfg *Config, logger *zap.Logger, payer string, amo
 	message := fmt.Sprintf(
 		"*High Risk Approval Request*\n\n"+
 			"*Payer:* `%s`\n"+
-			"*Amount:* %.2f USDC\n"+
+			"*Amount:* %.2f credits\n"+
 			"*Resource:* `%s`\n\n"+
 			"[Approve](%s)  |  [Reject](%s)",
 		payer, amount, resource, approveURL, rejectURL,

@@ -189,7 +189,7 @@ func (s *SQLiteStore) CheckAndSpend(payer string, amount float64, budgetLimit fl
 
 	newTotal := totalSpent + amount
 	if newTotal > budgetLimit {
-		reason := fmt.Sprintf("%.2f + %.2f > %.2f USDC", totalSpent, amount, budgetLimit)
+		reason := fmt.Sprintf("%.2f + %.2f > %.2f credits", totalSpent, amount, budgetLimit)
 		return false, reason, totalSpent, requestCount, "", nil
 	}
 

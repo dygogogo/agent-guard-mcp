@@ -29,7 +29,7 @@ func registerTools(s *server.MCPServer, store BudgetStore, cfg *Config, logger *
 
 	s.AddTool(mcp.NewTool("spend",
 		mcp.WithDescription("Execute a spending action. Checks budget, detects high-risk, records transaction."),
-		mcp.WithNumber("amount", mcp.Required(), mcp.Description("Amount to spend in USDC")),
+		mcp.WithNumber("amount", mcp.Required(), mcp.Description("Amount to spend in credits")),
 		mcp.WithString("resource", mcp.Required(), mcp.Description("Target resource identifier")),
 		mcp.WithString("description", mcp.Description("Optional description of the spend")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -38,7 +38,7 @@ func registerTools(s *server.MCPServer, store BudgetStore, cfg *Config, logger *
 
 	s.AddTool(mcp.NewTool("request_approval",
 		mcp.WithDescription("Explicitly request human approval for an action"),
-		mcp.WithNumber("amount", mcp.Required(), mcp.Description("Amount in USDC")),
+		mcp.WithNumber("amount", mcp.Required(), mcp.Description("Amount in credits")),
 		mcp.WithString("resource", mcp.Required(), mcp.Description("Target resource")),
 		mcp.WithString("reason", mcp.Required(), mcp.Description("Reason for approval request")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {

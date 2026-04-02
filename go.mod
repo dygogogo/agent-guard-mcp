@@ -1,4 +1,4 @@
-module github.com/henrydu/mcp-guard
+module github.com/dygogogo/mcp-guard
 
 go 1.24.6
 

@@ -1,0 +1,17 @@
+{
+  "name": "mcp-guard",
+  "description": "Budget control, approval workflows, and audit logging for AI agents. Prevents overspending and unauthorized operations by AI agents (Claude Code, Cursor, ChatGPT).",
+  "url": "http://localhost:8080",
+  "tools": [
+    "check_budget",
+    "spend",
+    "request_approval",
+    "approve",
+    "reject",
+    "check_approval",
+    "get_audit_log",
+    "get_pending_approvals"
+  ],
+  "transport": "streamable-http",
+  "auth": null
+}

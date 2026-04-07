@@ -1,0 +1,38 @@
+# .goreleaser.yaml
+version: 2
+
+# Build configuration
+builds:
+  - id: agent-guard-mcp
+    binary: agent-guard-mcp
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    main: .
+    flags:
+      - -trimpath
+
+# Archive configuration (no tarballs, just binaries)
+archives:
+  - id: default
+    format: zip
+    wrap_in_directory: true
+
+# Release to GitHub
+release:
+  github:
+    owner: dygogogo
+    name: agent-guard-mcp
+  draft: true
+  prerelease: false
+  name_template: "{{ .Tag }}"
+
+# Checksum
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Tag }}_checksums.txt"

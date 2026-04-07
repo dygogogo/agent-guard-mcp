@@ -45,6 +45,9 @@ logs/
 mcp-guard
 agent-guard-mcp
 
+# 数据库
+agent_guard.db
+
 # Claude Code 相关
 CLAUDE.md
 .claude/

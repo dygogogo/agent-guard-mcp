@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -14,9 +15,11 @@ import (
 func NewMCPGuardServer(store BudgetStore, cfg *Config, logger *zap.Logger) *server.MCPServer {
 	s := server.NewMCPServer("agent-guard-mcp", "1.0.0",
 		server.WithToolCapabilities(false),
+		server.WithResourceCapabilities(true, false),
 	)
 
 	registerTools(s, store, cfg, logger)
+	registerResources(s, store, cfg)
 	return s
 }
 
@@ -80,6 +83,48 @@ func registerTools(s *server.MCPServer, store BudgetStore, cfg *Config, logger *
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		return handleGetPendingApprovals(store)
 	})
+}
+
+func registerResources(s *server.MCPServer, store BudgetStore, cfg *Config) {
+	s.AddResource(
+		mcp.NewResource(
+			"budget://status",
+			"Daily Budget Status",
+			mcp.WithResourceDescription("Current daily budget usage: limit, spent, remaining, request count"),
+			mcp.WithMIMEType("application/json"),
+		),
+		func(ctx context.Context, req mcp.ReadResourceRequest) ([]mcp.ResourceContents, error) {
+			return handleBudgetResource(store, cfg)
+		},
+	)
+}
+
+func handleBudgetResource(store BudgetStore, cfg *Config) ([]mcp.ResourceContents, error) {
+	spent, count, err := store.GetDailySpent()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get daily spent: %w", err)
+	}
+
+	data := map[string]interface{}{
+		"limit":         cfg.BudgetLimit,
+		"spent":         spent,
+		"remaining":     cfg.BudgetLimit - spent,
+		"request_count": count,
+		"date":          fmtTimeDate(),
+	}
+
+	text, err := json.Marshal(data)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal budget: %w", err)
+	}
+
+	return []mcp.ResourceContents{
+		mcp.TextResourceContents{
+			URI:      "budget://status",
+			MIMEType: "application/json",
+			Text:     string(text),
+		},
+	}, nil
 }
 
 func handleCheckBudget(store BudgetStore, cfg *Config) (*mcp.CallToolResult, error) {

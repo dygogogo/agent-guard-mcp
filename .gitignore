@@ -53,4 +53,4 @@ CLAUDE.md
 .claude/
 
 # 设计文档（本地开发用）
-docs/
+docs/dist/
